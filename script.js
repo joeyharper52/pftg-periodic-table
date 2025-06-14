@@ -1,7 +1,7 @@
 // Complete array of all 118 elements with placeholder radius and angle
 // Adjust radius and angle based on your spiral image's layout
 const elements = [
-    { symbol: "H", name: "Hydrogen", desc: "A light, colorless gas.", radius: 10, angle: 0 },
+    { symbol: "H", name: "Hydrogen", desc: "A light, colorless gas.", radius: 0, angle: 0 },
     { symbol: "He", name: "Helium", desc: "A noble gas used in balloons.", radius: 10, angle: 30 },
     { symbol: "Li", name: "Lithium", desc: "A soft, silvery metal.", radius: 20, angle: 0 },
     { symbol: "Be", name: "Beryllium", desc: "A lightweight, strong metal.", radius: 20, angle: 45 },
@@ -10,9 +10,9 @@ const elements = [
     { symbol: "N", name: "Nitrogen", desc: "Makes up 78% of air.", radius: 40, angle: 0 },
     { symbol: "O", name: "Oxygen", desc: "Essential for respiration.", radius: 40, angle: 45 },
     { symbol: "F", name: "Fluorine", desc: "A highly reactive halogen.", radius: 50, angle: 0 },
-    { symbol: "Ne", name: "Neon", desc: "Used in glowing signs.", radius: 50, angle: 36 },
-    { symbol: "Na", name: "Sodium", desc: "A reactive alkali metal.", radius: 60, angle: 0 },
-    { symbol: "Mg", name: "Magnesium", desc: "Burns with a bright flame.", radius: 60, angle: 30 },
+    { symbol: "Ne", name: "Neon", desc: "Used in glowing signs.", radius: 10, angle: 30 },
+    { symbol: "Na", name: "Sodium", desc: "A reactive alkali metal.", radius: 20, angle: 45 },
+    { symbol: "Mg", name: "Magnesium", desc: "Burns with a bright flame.", radius: 25, angle: 60 },
     { symbol: "Al", name: "Aluminum", desc: "A lightweight metal.", radius: 70, angle: 0 },
     { symbol: "Si", name: "Silicon", desc: "Used in semiconductors.", radius: 70, angle: 25 },
     { symbol: "P", name: "Phosphorus", desc: "Essential for life.", radius: 80, angle: 0 },
@@ -87,7 +87,7 @@ const elements = [
     { symbol: "Po", name: "Polonium", desc: "Radioactive.", radius: 420, angle: 312 },
     { symbol: "At", name: "Astatine", desc: "Rare halogen.", radius: 430, angle: 0 },
     { symbol: "Rn", name: "Radon", desc: "Radioactive gas.", radius: 430, angle: 310 },
-    { symbol: "Fr", name: "Francium", desc: "Highly radioactive.", radius: 440, angle: 0 },
+    { symbol: "Fr", name: "Francium", desc: "Highly radioactive.", radius: 50, angle: 180 },
     { symbol: "Ra", name: "Radium", desc: "Radioactive.", radius: 440, angle: 308 },
     { symbol: "Ac", name: "Actinium", desc: "Radioactive metal.", radius: 450, angle: 0 },
     { symbol: "Th", name: "Thorium", desc: "Nuclear fuel.", radius: 450, angle: 306 },
@@ -118,7 +118,7 @@ const elements = [
     { symbol: "Mc", name: "Moscovium", desc: "Synthetic element.", radius: 580, angle: 0 },
     { symbol: "Lv", name: "Livermorium", desc: "Synthetic element.", radius: 580, angle: 280 },
     { symbol: "Ts", name: "Tennessine", desc: "Synthetic element.", radius: 590, angle: 0 },
-    { symbol: "Og", name: "Oganesson", desc: "Synthetic noble gas.", radius: 590, angle: 278 }
+    { symbol: "Og", name: "Oganesson", desc: "Synthetic noble gas.", radius: 60, angle: 278 }
 ];
 
 const overlay = document.getElementById("element-overlay");
