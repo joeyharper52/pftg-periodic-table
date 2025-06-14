@@ -16,17 +16,23 @@ body {
 }
 
 .table-image {
-    max-width: 90%; /* Slightly larger for better visibility */
+    width: 100%;
+    max-width: 600px;
     height: auto;
-    border: 2px solid #333; /* Subtle border for definition */
 }
 
-#element-overlay {
+.element {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    z-index: 5;
+    width: 4vw; /* Responsive sizing */
+    height: 4vw;
+    min-width: 20px;
+    min-height: 20px;
+    background-color: rgba(255, 0, 0, 0.5); /* Or transparent later */
+    border-radius: 50%;
+}
+.element:active {
+    outline: 2px solid #00ccff;
 }
 
 .description-box {
@@ -39,7 +45,8 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); /* Stronger shadow */
     z-index: 10;
-    width: 320px; /* Slightly wider for better text display */
+    width: 90%;
+    max-width: 320px;
     text-align: left;
 }
 
