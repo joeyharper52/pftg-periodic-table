@@ -137,10 +137,8 @@ document.addEventListener("DOMContentLoaded", () => {
         div.style.width = "2%"; // Adjust size based on your image
         div.style.height = "2%";
         div.style.cursor = "pointer";
-        // For testing, make divs visible
         div.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
-        // For final version, uncomment the line below and comment out the one above
-        // div.style.backgroundColor = "transparent";
+        div.dataset.zone = el.zone;
 
         div.addEventListener("click", () => {
             document.getElementById("element-name").textContent = `${el.name} (${el.symbol})`;
