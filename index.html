@@ -1,33 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>PFTG Spiral Periodic Table</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PFTG Hybrid Periodic Table</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1 class="title">PFTG Hybrid Periodic Table</h1>
-
-  <div class="zone-buttons">
-    <button class="zone-toggle" data-zone="all">All</button>
-    <button class="zone-toggle" data-zone="Core">Core</button>
-    <button class="zone-toggle" data-zone="Zone 1">Zone 1</button>
-    <button class="zone-toggle" data-zone="Zone 2">Zone 2</button>
-    <button class="zone-toggle" data-zone="Zone 3">Zone 3</button>
-    <button class="zone-toggle" data-zone="Zone 4">Zone 4</button>
-    <button class="zone-toggle" data-zone="Zone 5">Zone 5</button>
-    <button class="zone-toggle" data-zone="Zone 6">Zone 6</button>
-  </div>
-
-  <div id="table-container">
-    <svg id="spiral-table" viewBox="0 0 800 800">
-      <image href="pftg_spiral_background.png" x="0" y="0" width="800" height="800" />
-    </svg>
-  </div>
-
-  <div id="tooltip" class="hidden"></div>
-
-  <script src="script.js"></script>
+    <div class="container">
+        <img src="pftg_periodic_table.jpg" alt="PFTG Hybrid Periodic Table" class="table-image">
+        <div id="element-overlay"></div>
+        <div id="description-box" class="description-box hidden">
+            <h2 id="element-name"></h2>
+            <p id="element-desc"></p>
+            <button onclick="hideDescription()">Close</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
