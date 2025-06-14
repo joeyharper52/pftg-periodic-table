@@ -1,14 +1,21 @@
+const elements = [ /* your element array, same as before */ ];
+
 const svg = document.getElementById("spiral-table");
 const tooltip = document.getElementById("tooltip");
 const zoneButtons = document.querySelectorAll(".zone-toggle");
 
-// Main spiral layout
-elements.forEach((el, i) => {
-  const angle = i * 0.65;  // spread more widely around the spiral
-  const radius = 60 + i * 5.5;  // slower outward growth
+// Spiral constants
+const angleStep = 0.33;
+const radiusStep = 4;
+const centerX = 400;
+const centerY = 400;
 
-  const x = 400 + radius * Math.cos(angle);
-  const y = 400 + radius * Math.sin(angle);
+// Draw element buttons around a spiral
+elements.forEach((el, i) => {
+  const angle = i * angleStep;
+  const radius = 30 + i * radiusStep;
+  const x = centerX + radius * Math.cos(angle);
+  const y = centerY + radius * Math.sin(angle);
 
   const btn = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
   btn.setAttribute("x", x - 20);
@@ -16,18 +23,26 @@ elements.forEach((el, i) => {
   btn.setAttribute("width", "40");
   btn.setAttribute("height", "40");
 
-  // Inject inline styles to make the buttons render properly
   btn.innerHTML = `
-    <div xmlns="http://www.w3.org/1999/xhtml" class="element" data-zone="${el.zone}"
-      style="width:40px; height:40px; border-radius:8px; line-height:40px;
-             background:${el.color}; text-align:center; font-weight:bold; color:#000;
-             box-shadow:0 0 6px ${el.color}88; font-size:16px;">
+    <div xmlns="http://www.w3.org/1999/xhtml" 
+         class="element" 
+         data-zone="${el.zone}" 
+         style="
+           width: 40px; height: 40px; 
+           border-radius: 8px; 
+           background: ${el.color}; 
+           display: flex; align-items: center; justify-content: center;
+           font-weight: bold;
+           color: black;
+           font-size: 1rem;
+           cursor: pointer;
+         ">
       ${el.symbol}
     </div>
   `;
 
   // Tooltip behavior
-  btn.addEventListener("mouseenter", (e) => {
+  btn.addEventListener("mouseenter", () => {
     tooltip.innerHTML = `<strong>${el.symbol} (#${el.number})</strong><br>${el.desc}`;
     tooltip.classList.remove("hidden");
   });
@@ -44,13 +59,13 @@ elements.forEach((el, i) => {
   svg.appendChild(btn);
 });
 
-// Zone filter logic
+// Zone filtering logic
 zoneButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     const zone = btn.getAttribute("data-zone");
-
     document.querySelectorAll(".element").forEach(el => {
-      el.style.display = (zone === "all" || el.getAttribute("data-zone") === zone) ? "block" : "none";
+      const show = zone === "all" || el.getAttribute("data-zone") === zone;
+      el.style.display = show ? "flex" : "none";
     });
 
     zoneButtons.forEach(b => b.classList.remove("active"));
