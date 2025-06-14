@@ -1,27 +1,26 @@
-obody {
+body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #1a1a1a;
+  background-color: #1a1a1a; /* Dark background */
   color: #e0e0e0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  padding: 1rem;
+  overflow-x: hidden;
 }
 
 .container {
   position: relative;
-  display: block;
-  width: 1200px;         /* Match expected layout width */
-  max-width: 100%;
-  margin: 0 auto;         /* Center it */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .table-image {
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
 }
 
 #element-overlay {
