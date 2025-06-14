@@ -4,97 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Spiral Periodic Table</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .container {
-            position: relative;
-            text-align: center;
-        }
-
-        .table-image {
-            max-width: 80%;
-            height: auto;
-        }
-
-        .description-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 10;
-            width: 300px;
-        }
-
-        .description-box.hidden {
-            display: none;
-        }
-
-        .description-box h2 {
-            margin-top: 0;
-            color: #333;
-        }
-
-        .description-box p {
-            margin: 10px 0;
-            color: #666;
-        }
-
-        .description-box button {
-            background-color: #4CAF50;
-            border: none;
-            padding: 10px 20px;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .description-box button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <img src="spiral_periodic_table.jpg" alt="Spiral Periodic Table" usemap="#element-map" class="table-image">
-        <map name="element-map">
-            <!-- Replace coordinates and element data with actual values from your image -->
-            <area shape="rect" coords="100,100,150,150" href="#" onclick="showDescription('H', 'Hydrogen', 'A light, colorless gas.'); return false;" alt="Hydrogen">
-            <area shape="rect" coords="200,200,250,250" href="#" onclick="showDescription('He', 'Helium', 'A noble gas used in balloons.'); return false;" alt="Helium">
-            <!-- Add more areas for each element in your spiral image -->
-            <!-- Example for a circular area: -->
-            <!-- <area shape="circle" coords="300,300,20" href="#" onclick="showDescription('Li', 'Lithium', 'A soft, silvery metal.'); return false;" alt="Lithium"> -->
-            <!-- Example for a polygonal area: -->
-            <!-- <area shape="poly" coords="400,100,450,150,400,200,350,150" href="#" onclick="showDescription('Be', 'Beryllium', 'A lightweight metal.'); return false;" alt="Beryllium"> -->
-        </map>
-        <div id="description-box" class="description-box hidden">
-            <h2 id="element-name"></h2>
-            <p id="element-desc"></p>
-            <button onclick="hideDescription()">Close</button>
-        </div>
+        <img src="spiral_periodic_table.jpg" alt="Spiral Periodic Table" class="table-image">
+        <div id="element-overlay"></div>
     </div>
-    <script>
-        function showDescription(symbol, name, desc) {
-            document.getElementById('element-name').textContent = name + ' (' + symbol + ')';
-            document.getElementById('element-desc').textContent = desc;
-            document.getElementById('description-box').classList.remove('hidden');
-        }
-
-        function hideDescription() {
-            document.getElementById('description-box').classList.add('hidden');
-        }
-    </script>
+    <div id="description-box" class="description-box hidden">
+        <h2 id="element-name"></h2>
+        <p id="element-desc"></p>
+        <button onclick="hideDescription()">Close</button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
