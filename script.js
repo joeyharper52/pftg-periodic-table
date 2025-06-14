@@ -8,7 +8,7 @@ const elements = [
     { symbol: "C", name: "Carbon", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 180.0, radius: 24.24 },
     { symbol: "N", name: "Nitrogen", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 225.0, radius: 24.24 },
     { symbol: "O", name: "Oxygen", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 270.0, radius: 24.24 },
-    { symbol: "F", name: "Fluorine", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 315.0, radius: 24.24 },
+    { symbol: "F", name: "Fluorine", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 0.90, radius: 0.5 },
     { symbol: "Ne", name: "Neon", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 360.0, radius: 24.24 },
     { symbol: "Na", name: "Sodium", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 405.0, radius: 24.24 },
     { symbol: "Mg", name: "Magnesium", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 450.0, radius: 24.24 },
