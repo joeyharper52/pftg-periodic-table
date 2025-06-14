@@ -1,1 +1,0 @@
-# pftg-periodic-table
