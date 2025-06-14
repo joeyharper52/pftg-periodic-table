@@ -1,22 +1,24 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #1a1a2e;
-    color: #fff;
+    background-color: #1a1a1a; /* Dark background for contrast */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    color: #e0e0e0; /* Light text for readability */
 }
 
 .container {
     position: relative;
+    display: inline-block;
     text-align: center;
 }
 
 .table-image {
-    max-width: 80%;
+    max-width: 90%; /* Slightly larger for better visibility */
     height: auto;
+    border: 2px solid #333; /* Subtle border for definition */
 }
 
 #element-overlay {
@@ -32,12 +34,13 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #0f3460;
+    background-color: #2c2c2c; /* Dark modal background */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); /* Stronger shadow */
     z-index: 10;
-    width: 300px;
+    width: 320px; /* Slightly wider for better text display */
+    text-align: left;
 }
 
 .description-box.hidden {
@@ -46,22 +49,27 @@ body {
 
 .description-box h2 {
     margin-top: 0;
-    color: #e94560;
+    color: #00ccff; /* Cyan for element name */
+    font-size: 1.5em;
 }
 
 .description-box p {
     margin: 10px 0;
+    color: #b3b3b3; /* Light grey for description */
+    line-height: 1.4;
 }
 
 .description-box button {
-    background-color: #e94560;
+    background-color: #00cc44; /* Green button */
     border: none;
     padding: 10px 20px;
-    color: #fff;
+    color: white;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
 }
 
 .description-box button:hover {
-    background-color: #ff6f91;
+    background-color: #00a733; /* Darker green on hover */
 }
