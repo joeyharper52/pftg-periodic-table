@@ -1,192 +1,156 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Periodic Table</title>
-  <style>
-    #periodic-table {
-      border-collapse: collapse;
-      margin: 20px;
-    }
-    #periodic-table td {
-      width: 50px;
-      height: 50px;
-      text-align: center;
-      vertical-align: middle;
-      border: 1px solid #ccc;
-      cursor: pointer;
-    }
-    #periodic-table td:empty {
-      border: none;
-      cursor: default;
-    }
-    .placeholder {
-      background-color: #f0f0f0;
-      cursor: default;
-    }
-  </style>
-</head>
-<body>
-  <table id="periodic-table">
-    <tbody></tbody>
-  </table>
-  <script>
-    // Array of all 118 elements with their name, symbol, atomic number, row, and column
-    const elements = [
-      { name: "Hydrogen", symbol: "H", atomicNumber: 1, row: 1, column: 1 },
-      { name: "Helium", symbol: "He", atomicNumber: 2, row: 1, column: 18 },
-      { name: "Lithium", symbol: "Li", atomicNumber: 3, row: 2, column: 1 },
-      { name: "Beryllium", symbol: "Be", atomicNumber: 4, row: 2, column: 2 },
-      { name: "Boron", symbol: "B", atomicNumber: 5, row: 2, column: 13 },
-      { name: "Carbon", symbol: "C", atomicNumber: 6, row: 2, column: 14 },
-      { name: "Nitrogen", symbol: "N", atomicNumber: 7, row: 2, column: 15 },
-      { name: "Oxygen", symbol: "O", atomicNumber: 8, row: 2, column: 16 },
-      { name: "Fluorine", symbol: "F", atomicNumber: 9, row: 2, column: 17 },
-      { name: "Neon", symbol: "Ne", atomicNumber: 10, row: 2, column: 18 },
-      { name: "Sodium", symbol: "Na", atomicNumber: 11, row: 3, column: 1 },
-      { name: "Magnesium", symbol: "Mg", atomicNumber: 12, row: 3, column: 2 },
-      { name: "Aluminum", symbol: "Al", atomicNumber: 13, row: 3, column: 13 },
-      { name: "Silicon", symbol: "Si", atomicNumber: 14, row: 3, column: 14 },
-      { name: "Phosphorus", symbol: "P", atomicNumber: 15, row: 3, column: 15 },
-      { name: "Sulfur", symbol: "S", atomicNumber: 16, row: 3, column: 16 },
-      { name: "Chlorine", symbol: "Cl", atomicNumber: 17, row: 3, column: 17 },
-      { name: "Argon", symbol: "Ar", atomicNumber: 18, row: 3, column: 18 },
-      { name: "Potassium", symbol: "K", atomicNumber: 19, row: 4, column: 1 },
-      { name: "Calcium", symbol: "Ca", atomicNumber: 20, row: 4, column: 2 },
-      { name: "Scandium", symbol: "Sc", atomicNumber: 21, row: 4, column: 3 },
-      { name: "Titanium", symbol: "Ti", atomicNumber: 22, row: 4, column: 4 },
-      { name: "Vanadium", symbol: "V", atomicNumber: 23, row: 4, column: 5 },
-      { name: "Chromium", symbol: "Cr", atomicNumber: 24, row: 4, column: 6 },
-      { name: "Manganese", symbol: "Mn", atomicNumber: 25, row: 4, column: 7 },
-      { name: "Iron", symbol: "Fe", atomicNumber: 26, row: 4, column: 8 },
-      { name: "Cobalt", symbol: "Co", atomicNumber: 27, row: 4, column: 9 },
-      { name: "Nickel", symbol: "Ni", atomicNumber: 28, row: 4, column: 10 },
-      { name: "Copper", symbol: "Cu", atomicNumber: 29, row: 4, column: 11 },
-      { name: "Zinc", symbol: "Zn", atomicNumber: 30, row: 4, column: 12 },
-      { name: "Gallium", symbol: "Ga", atomicNumber: 31, row: 4, column: 13 },
-      { name: "Germanium", symbol: "Ge", atomicNumber: 32, row: 4, column: 14 },
-      { name: "Arsenic", symbol: "As", atomicNumber: 33, row: 4, column: 15 },
-      { name: "Selenium", symbol: "Se", atomicNumber: 34, row: 4, column: 16 },
-      { name: "Bromine", symbol: "Br", atomicNumber: 35, row: 4, column: 17 },
-      { name: "Krypton", symbol: "Kr", atomicNumber: 36, row: 4, column: 18 },
-      { name: "Rubidium", symbol: "Rb", atomicNumber: 37, row: 5, column: 1 },
-      { name: "Strontium", symbol: "Sr", atomicNumber: 38, row: 5, column: 2 },
-      { name: "Yttrium", symbol: "Y", atomicNumber: 39, row: 5, column: 3 },
-      { name: "Zirconium", symbol: "Zr", atomicNumber: 40, row: 5, column: 4 },
-      { name: "Niobium", symbol: "Nb", atomicNumber: 41, row: 5, column: 5 },
-      { name: "Molybdenum", symbol: "Mo", atomicNumber: 42, row: 5, column: 6 },
-      { name: "Technetium", symbol: "Tc", atomicNumber: 43, row: 5, column: 7 },
-      { name: "Ruthenium", symbol: "Ru", atomicNumber: 44, row: 5, column: 8 },
-      { name: "Rhodium", symbol: "Rh", atomicNumber: 45, row: 5, column: 9 },
-      { name: "Palladium", symbol: "Pd", atomicNumber: 46, row: 5, column: 10 },
-      { name: "Silver", symbol: "Ag", atomicNumber: 47, row: 5, column: 11 },
-      { name: "Cadmium", symbol: "Cd", atomicNumber: 48, row: 5, column: 12 },
-      { name: "Indium", symbol: "In", atomicNumber: 49, row: 5, column: 13 },
-      { name: "Tin", symbol: "Sn", atomicNumber: 50, row: 5, column: 14 },
-      { name: "Antimony", symbol: "Sb", atomicNumber: 51, row: 5, column: 15 },
-      { name: "Tellurium", symbol: "Te", atomicNumber: 52, row: 5, column: 16 },
-      { name: "Iodine", symbol: "I", atomicNumber: 53, row: 5, column: 17 },
-      { name: "Xenon", symbol: "Xe", atomicNumber: 54, row: 5, column: 18 },
-      { name: "Cesium", symbol: "Cs", atomicNumber: 55, row: 6, column: 1 },
-      { name: "Barium", symbol: "Ba", atomicNumber: 56, row: 6, column: 2 },
-      { name: "Hafnium", symbol: "Hf", atomicNumber: 72, row: 6, column: 4 },
-      { name: "Tantalum", symbol: "Ta", atomicNumber: 73, row: 6, column: 5 },
-      { name: "Tungsten", symbol: "W", atomicNumber: 74, row: 6, column: 6 },
-      { name: "Rhenium", symbol: "Re", atomicNumber: 75, row: 6, column: 7 },
-      { name: "Osmium", symbol: "Os", atomicNumber: 76, row: 6, column: 8 },
-      { name: "Iridium", symbol: "Ir", atomicNumber: 77, row: 6, column: 9 },
-      { name: "Platinum", symbol: "Pt", atomicNumber: 78, row: 6, column: 10 },
-      { name: "Gold", symbol: "Au", atomicNumber: 79, row: 6, column: 11 },
-      { name: "Mercury", symbol: "Hg", atomicNumber: 80, row: 6, column: 12 },
-      { name: "Thallium", symbol: "Tl", atomicNumber: 81, row: 6, column: 13 },
-      { name: "Lead", symbol: "Pb", atomicNumber: 82, row: 6, column: 14 },
-      { name: "Bismuth", symbol: "Bi", atomicNumber: 83, row: 6, column: 15 },
-      { name: "Polonium", symbol: "Po", atomicNumber: 84, row: 6, column: 16 },
-      { name: "Astatine", symbol: "At", atomicNumber: 85, row: 6, column: 17 },
-      { name: "Radon", symbol: "Rn", atomicNumber: 86, row: 6, column: 18 },
-      { name: "Francium", symbol: "Fr", atomicNumber: 87, row: 7, column: 1 },
-      { name: "Radium", symbol: "Ra", atomicNumber: 88, row: 7, column: 2 },
-      { name: "Rutherfordium", symbol: "Rf", atomicNumber: 104, row: 7, column: 4 },
-      { name: "Dubnium", symbol: "Db", atomicNumber: 105, row: 7, column: 5 },
-      { name: "Seaborgium", symbol: "Sg", atomicNumber: 106, row: 7, column: 6 },
-      { name: "Bohrium", symbol: "Bh", atomicNumber: 107, row: 7, column: 7 },
-      { name: "Hassium", symbol: "Hs", atomicNumber: 108, row: 7, column: 8 },
-      { name: "Meitnerium", symbol: "Mt", atomicNumber: 109, row: 7, column: 9 },
-      { name: "Darmstadtium", symbol: "Ds", atomicNumber: 110, row: 7, column: 10 },
-      { name: "Roentgenium", symbol: "Rg", atomicNumber: 111, row: 7, column: 11 },
-      { name: "Copernicium", symbol: "Cn", atomicNumber: 112, row: 7, column: 12 },
-      { name: "Nihonium", symbol: "Nh", atomicNumber: 113, row: 7, column: 13 },
-      { name: "Flerovium", symbol: "Fl", atomicNumber: 114, row: 7, column: 14 },
-      { name: "Moscovium", symbol: "Mc", atomicNumber: 115, row: 7, column: 15 },
-      { name: "Livermorium", symbol: "Lv", atomicNumber: 116, row: 7, column: 16 },
-      { name: "Tennessine", symbol: "Ts", atomicNumber: 117, row: 7, column: 17 },
-      { name: "Oganesson", symbol: "Og", atomicNumber: 118, row: 7, column: 18 },
-      // Lanthanides (rows 8, columns 3-17)
-      { name: "Lanthanum", symbol: "La", atomicNumber: 57, row: 8, column: 3 },
-      { name: "Cerium", symbol: "Ce", atomicNumber: 58, row: 8, column: 4 },
-      { name: "Praseodymium", symbol: "Pr", atomicNumber: 59, row: 8, column: 5 },
-      { name: "Neodymium", symbol: "Nd", atomicNumber: 60, row: 8, column: 6 },
-      { name: "Promethium", symbol: "Pm", atomicNumber: 61, row: 8, column: 7 },
-      { name: "Samarium", symbol: "Sm", atomicNumber: 62, row: 8, column: 8 },
-      { name: "Europium", symbol: "Eu", atomicNumber: 63, row: 8, column: 9 },
-      { name: "Gadolinium", symbol: "Gd", atomicNumber: 64, row: 8, column: 10 },
-      { name: "Terbium", symbol: "Tb", atomicNumber: 65, row: 8, column: 11 },
-      { name: "Dysprosium", symbol: "Dy", atomicNumber: 66, row: 8, column: 12 },
-      { name: "Holmium", symbol: "Ho", atomicNumber: 67, row: 8, column: 13 },
-      { name: "Erbium", symbol: "Er", atomicNumber: 68, row: 8, column: 14 },
-      { name: "Thulium", symbol: "Tm", atomicNumber: 69, row: 8, column: 15 },
-      { name: "Ytterbium", symbol: "Yb", atomicNumber: 70, row: 8, column: 16 },
-      { name: "Lutetium", symbol: "Lu", atomicNumber: 71, row: 8, column: 17 },
-      // Actinides (row 9, columns 3-17)
-      { name: "Actinium", symbol: "Ac", atomicNumber: 89, row: 9, column: 3 },
-      { name: "Thorium", symbol: "Th", atomicNumber: 90, row: 9, column: 4 },
-      { name: "Protactinium", symbol: "Pa", atomicNumber: 91, row: 9, column: 5 },
-      { name: "Uranium", symbol: "U", atomicNumber: 92, row: 9, column: 6 },
-      { name: "Neptunium", symbol: "Np", atomicNumber: 93, row: 9, column: 7 },
-      { name: "Plutonium", symbol: "Pu", atomicNumber: 94, row: 9, column: 8 },
-      { name: "Americium", symbol: "Am", atomicNumber: 95, row: 9, column: 9 },
-      { name: "Curium", symbol: "Cm", atomicNumber: 96, row: 9, column: 10 },
-      { name: "Berkelium", symbol: "Bk", atomicNumber: 97, row: 9, column: 11 },
-      { name: "Californium", symbol: "Cf", atomicNumber: 98, row: 9, column: 12 },
-      { name: "Einsteinium", symbol: "Es", atomicNumber: 99, row: 9, column: 13 },
-      { name: "Fermium", symbol: "Fm", atomicNumber: 100, row: 9, column: 14 },
-      { name: "Mendelevium", symbol: "Md", atomicNumber: 101, row: 9, column: 15 },
-      { name: "Nobelium", symbol: "No", atomicNumber: 102, row: 9, column: 16 },
-      { name: "Lawrencium", symbol: "Lr", atomicNumber: 103, row: 9, column: 17 }
-    ];
+// Complete array of all 118 elements with placeholder radius and angle
+// Adjust radius and angle based on your spiral image's layout
+const elements = [
+    { symbol: "H", name: "Hydrogen", desc: "A light, colorless gas.", radius: 10, angle: 0 },
+    { symbol: "He", name: "Helium", desc: "A noble gas used in balloons.", radius: 10, angle: 30 },
+    { symbol: "Li", name: "Lithium", desc: "A soft, silvery metal.", radius: 20, angle: 0 },
+    { symbol: "Be", name: "Beryllium", desc: "A lightweight, strong metal.", radius: 20, angle: 45 },
+    { symbol: "B", name: "Boron", desc: "A metalloid used in glass.", radius: 30, angle: 0 },
+    { symbol: "C", name: "Carbon", desc: "Basis of organic chemistry.", radius: 30, angle: 60 },
+    { symbol: "N", name: "Nitrogen", desc: "Makes up 78% of air.", radius: 40, angle: 0 },
+    { symbol: "O", name: "Oxygen", desc: "Essential for respiration.", radius: 40, angle: 45 },
+    { symbol: "F", name: "Fluorine", desc: "A highly reactive halogen.", radius: 50, angle: 0 },
+    { symbol: "Ne", name: "Neon", desc: "Used in glowing signs.", radius: 50, angle: 36 },
+    { symbol: "Na", name: "Sodium", desc: "A reactive alkali metal.", radius: 60, angle: 0 },
+    { symbol: "Mg", name: "Magnesium", desc: "Burns with a bright flame.", radius: 60, angle: 30 },
+    { symbol: "Al", name: "Aluminum", desc: "A lightweight metal.", radius: 70, angle: 0 },
+    { symbol: "Si", name: "Silicon", desc: "Used in semiconductors.", radius: 70, angle: 25 },
+    { symbol: "P", name: "Phosphorus", desc: "Essential for life.", radius: 80, angle: 0 },
+    { symbol: "S", name: "Sulfur", desc: "Known for its smell.", radius: 80, angle: 22.5 },
+    { symbol: "Cl", name: "Chlorine", desc: "A disinfectant gas.", radius: 90, angle: 0 },
+    { symbol: "Ar", name: "Argon", desc: "An inert noble gas.", radius: 90, angle: 20 },
+    { symbol: "K", name: "Potassium", desc: "Vital for cells.", radius: 100, angle: 0 },
+    { symbol: "Ca", name: "Calcium", desc: "Strengthens bones.", radius: 100, angle: 18 },
+    { symbol: "Sc", name: "Scandium", desc: "A rare earth metal.", radius: 110, angle: 0 },
+    { symbol: "Ti", name: "Titanium", desc: "Strong and light.", radius: 110, angle: 16 },
+    { symbol: "V", name: "Vanadium", desc: "Used in steel alloys.", radius: 120, angle: 0 },
+    { symbol: "Cr", name: "Chromium", desc: "Adds shine to metals.", radius: 120, angle: 14 },
+    { symbol: "Mn", name: "Manganese", desc: "Improves steel strength.", radius: 130, angle: 0 },
+    { symbol: "Fe", name: "Iron", desc: "Core component of steel.", radius: 130, angle: 12 },
+    { symbol: "Co", name: "Cobalt", desc: "Used in magnets.", radius: 140, angle: 0 },
+    { symbol: "Ni", name: "Nickel", desc: "Resistant to corrosion.", radius: 140, angle: 10 },
+    { symbol: "Cu", name: "Copper", desc: "Excellent conductor.", radius: 150, angle: 0 },
+    { symbol: "Zn", name: "Zinc", desc: "Used in galvanizing.", radius: 150, angle: 8 },
+    { symbol: "Ga", name: "Gallium", desc: "Melts near room temp.", radius: 160, angle: 0 },
+    { symbol: "Ge", name: "Germanium", desc: "Used in electronics.", radius: 160, angle: 6 },
+    { symbol: "As", name: "Arsenic", desc: "A toxic metalloid.", radius: 170, angle: 0 },
+    { symbol: "Se", name: "Selenium", desc: "Used in photocells.", radius: 170, angle: 4 },
+    { symbol: "Br", name: "Bromine", desc: "A reddish liquid.", radius: 180, angle: 0 },
+    { symbol: "Kr", name: "Krypton", desc: "A rare noble gas.", radius: 180, angle: 2 },
+    { symbol: "Rb", name: "Rubidium", desc: "Highly reactive.", radius: 190, angle: 0 },
+    { symbol: "Sr", name: "Strontium", desc: "Used in fireworks.", radius: 190, angle: 358 },
+    { symbol: "Y", name: "Yttrium", desc: "Rare earth element.", radius: 200, angle: 0 },
+    { symbol: "Zr", name: "Zirconium", desc: "Corrosion-resistant.", radius: 200, angle: 356 },
+    { symbol: "Nb", name: "Niobium", desc: "Used in alloys.", radius: 210, angle: 0 },
+    { symbol: "Mo", name: "Molybdenum", desc: "High melting point.", radius: 210, angle: 354 },
+    { symbol: "Tc", name: "Technetium", desc: "First synthetic element.", radius: 220, angle: 0 },
+    { symbol: "Ru", name: "Ruthenium", desc: "Used in catalysts.", radius: 220, angle: 352 },
+    { symbol: "Rh", name: "Rhodium", desc: "Shiny and rare.", radius: 230, angle: 0 },
+    { symbol: "Pd", name: "Palladium", desc: "Used in catalysis.", radius: 230, angle: 350 },
+    { symbol: "Ag", name: "Silver", desc: "Precious metal.", radius: 240, angle: 0 },
+    { symbol: "Cd", name: "Cadmium", desc: "Toxic metal.", radius: 240, angle: 348 },
+    { symbol: "In", name: "Indium", desc: "Soft and malleable.", radius: 250, angle: 0 },
+    { symbol: "Sn", name: "Tin", desc: "Used in solder.", radius: 250, angle: 346 },
+    { symbol: "Sb", name: "Antimony", desc: "Brittle metalloid.", radius: 260, angle: 0 },
+    { symbol: "Te", name: "Tellurium", desc: "Rare metalloid.", radius: 260, angle: 344 },
+    { symbol: "I", name: "Iodine", desc: "Used in medicine.", radius: 270, angle: 0 },
+    { symbol: "Xe", name: "Xenon", desc: "Used in lighting.", radius: 270, angle: 342 },
+    { symbol: "Cs", name: "Cesium", desc: "Highly reactive.", radius: 280, angle: 0 },
+    { symbol: "Ba", name: "Barium", desc: "Used in X-rays.", radius: 280, angle: 340 },
+    { symbol: "La", name: "Lanthanum", desc: "Rare earth metal.", radius: 290, angle: 0 },
+    { symbol: "Ce", name: "Cerium", desc: "Used in catalysts.", radius: 290, angle: 338 },
+    { symbol: "Pr", name: "Praseodymium", desc: "Rare earth element.", radius: 300, angle: 0 },
+    { symbol: "Nd", name: "Neodymium", desc: "Used in magnets.", radius: 300, angle: 336 },
+    { symbol: "Pm", name: "Promethium", desc: "Radioactive rare earth.", radius: 310, angle: 0 },
+    { symbol: "Sm", name: "Samarium", desc: "Used in electronics.", radius: 310, angle: 334 },
+    { symbol: "Eu", name: "Europium", desc: "Used in phosphors.", radius: 320, angle: 0 },
+    { symbol: "Gd", name: "Gadolinium", desc: "Used in MRI.", radius: 320, angle: 332 },
+    { symbol: "Tb", name: "Terbium", desc: "Green phosphor.", radius: 330, angle: 0 },
+    { symbol: "Dy", name: "Dysprosium", desc: "High magnetic strength.", radius: 330, angle: 330 },
+    { symbol: "Ho", name: "Holmium", desc: "Used in lasers.", radius: 340, angle: 0 },
+    { symbol: "Er", name: "Erbium", desc: "Used in fiber optics.", radius: 340, angle: 328 },
+    { symbol: "Tm", name: "Thulium", desc: "Rare earth metal.", radius: 350, angle: 0 },
+    { symbol: "Yb", name: "Ytterbium", desc: "Used in lasers.", radius: 350, angle: 326 },
+    { symbol: "Lu", name: "Lutetium", desc: "Rare earth element.", radius: 360, angle: 0 },
+    { symbol: "Hf", name: "Hafnium", desc: "Corrosion-resistant.", radius: 360, angle: 324 },
+    { symbol: "Ta", name: "Tantalum", desc: "High melting point.", radius: 370, angle: 0 },
+    { symbol: "W", name: "Tungsten", desc: "Used in filaments.", radius: 370, angle: 322 },
+    { symbol: "Re", name: "Rhenium", desc: "High melting point.", radius: 380, angle: 0 },
+    { symbol: "Os", name: "Osmium", desc: "Densest natural element.", radius: 380, angle: 320 },
+    { symbol: "Ir", name: "Iridium", desc: "Very dense.", radius: 390, angle: 0 },
+    { symbol: "Pt", name: "Platinum", desc: "Precious metal.", radius: 390, angle: 318 },
+    { symbol: "Au", name: "Gold", desc: "Valuable and malleable.", radius: 400, angle: 0 },
+    { symbol: "Hg", name: "Mercury", desc: "Only liquid metal.", radius: 400, angle: 316 },
+    { symbol: "Tl", name: "Thallium", desc: "Toxic metal.", radius: 410, angle: 0 },
+    { symbol: "Pb", name: "Lead", desc: "Dense and soft.", radius: 410, angle: 314 },
+    { symbol: "Bi", name: "Bismuth", desc: "Low toxicity metal.", radius: 420, angle: 0 },
+    { symbol: "Po", name: "Polonium", desc: "Radioactive.", radius: 420, angle: 312 },
+    { symbol: "At", name: "Astatine", desc: "Rare halogen.", radius: 430, angle: 0 },
+    { symbol: "Rn", name: "Radon", desc: "Radioactive gas.", radius: 430, angle: 310 },
+    { symbol: "Fr", name: "Francium", desc: "Highly radioactive.", radius: 440, angle: 0 },
+    { symbol: "Ra", name: "Radium", desc: "Radioactive.", radius: 440, angle: 308 },
+    { symbol: "Ac", name: "Actinium", desc: "Radioactive metal.", radius: 450, angle: 0 },
+    { symbol: "Th", name: "Thorium", desc: "Nuclear fuel.", radius: 450, angle: 306 },
+    { symbol: "Pa", name: "Protactinium", desc: "Rare actinide.", radius: 460, angle: 0 },
+    { symbol: "U", name: "Uranium", desc: "Nuclear energy.", radius: 460, angle: 304 },
+    { symbol: "Np", name: "Neptunium", desc: "Synthetic actinide.", radius: 470, angle: 0 },
+    { symbol: "Pu", name: "Plutonium", desc: "Nuclear weapon material.", radius: 470, angle: 302 },
+    { symbol: "Am", name: "Americium", desc: "Used in smoke detectors.", radius: 480, angle: 0 },
+    { symbol: "Cm", name: "Curium", desc: "Synthetic actinide.", radius: 480, angle: 300 },
+    { symbol: "Bk", name: "Berkelium", desc: "Synthetic element.", radius: 490, angle: 0 },
+    { symbol: "Cf", name: "Californium", desc: "Used in research.", radius: 490, angle: 298 },
+    { symbol: "Es", name: "Einsteinium", desc: "Synthetic element.", radius: 500, angle: 0 },
+    { symbol: "Fm", name: "Fermium", desc: "Synthetic element.", radius: 500, angle: 296 },
+    { symbol: "Md", name: "Mendelevium", desc: "Synthetic element.", radius: 510, angle: 0 },
+    { symbol: "No", name: "Nobelium", desc: "Synthetic element.", radius: 510, angle: 294 },
+    { symbol: "Lr", name: "Lawrencium", desc: "Synthetic element.", radius: 520, angle: 0 },
+    { symbol: "Rf", name: "Rutherfordium", desc: "Synthetic element.", radius: 520, angle: 292 },
+    { symbol: "Db", name: "Dubnium", desc: "Synthetic element.", radius: 530, angle: 0 },
+    { symbol: "Sg", name: "Seaborgium", desc: "Synthetic element.", radius: 530, angle: 290 },
+    { symbol: "Bh", name: "Bohrium", desc: "Synthetic element.", radius: 540, angle: 0 },
+    { symbol: "Hs", name: "Hassium", desc: "Synthetic element.", radius: 540, angle: 288 },
+    { symbol: "Mt", name: "Meitnerium", desc: "Synthetic element.", radius: 550, angle: 0 },
+    { symbol: "Ds", name: "Darmstadtium", desc: "Synthetic element.", radius: 550, angle: 286 },
+    { symbol: "Rg", name: "Roentgenium", desc: "Synthetic element.", radius: 560, angle: 0 },
+    { symbol: "Cn", name: "Copernicium", desc: "Synthetic element.", radius: 560, angle: 284 },
+    { symbol: "Nh", name: "Nihonium", desc: "Synthetic element.", radius: 570, angle: 0 },
+    { symbol: "Fl", name: "Flerovium", desc: "Synthetic element.", radius: 570, angle: 282 },
+    { symbol: "Mc", name: "Moscovium", desc: "Synthetic element.", radius: 580, angle: 0 },
+    { symbol: "Lv", name: "Livermorium", desc: "Synthetic element.", radius: 580, angle: 280 },
+    { symbol: "Ts", name: "Tennessine", desc: "Synthetic element.", radius: 590, angle: 0 },
+    { symbol: "Og", name: "Oganesson", desc: "Synthetic noble gas.", radius: 590, angle: 278 }
+];
 
-    // Get the table body
-    const tbody = document.querySelector("#periodic-table tbody");
+const overlay = document.getElementById("element-overlay");
 
-    // Create 9 rows and 18 columns
-    for (let row = 1; row <= 9; row++) {
-      const tr = document.createElement("tr");
-      for (let col = 1; col <= 18; col++) {
-        const td = document.createElement("td");
+elements.forEach(el => {
+    const angleRad = el.angle * Math.PI / 180;
+    const x = 50 + el.radius * Math.cos(angleRad);
+    const y = 50 + el.radius * Math.sin(angleRad);
 
-        // Handle placeholders for lanthanides and actinides
-        if (row === 6 && col === 3) {
-          td.textContent = "La-Lu";
-          td.className = "placeholder";
-        } else if (row === 7 && col === 3) {
-          td.textContent = "Ac-Lr";
-          td.className = "placeholder";
-        } else {
-          // Find element for this row and column
-          const element = elements.find(e => e.row === row && e.column === col);
-          if (element) {
-            td.textContent = element.symbol;
-            td.title = element.name; // Tooltip on hover
-            td.addEventListener("click", () => {
-              alert(`${element.name} (${element.symbol}, Atomic Number: ${element.atomicNumber})`);
-            });
-          }
-        }
-        tr.appendChild(td);
-      }
-      tbody.appendChild(tr);
-    }
-  </script>
-</body>
-</html>
+    const div = document.createElement("div");
+    div.className = "element";
+    div.style.position = "absolute";
+    div.style.left = `${x}%`;
+    div.style.top = `${y}%`;
+    div.style.transform = "translate(-50%, -50%)";
+    div.style.width = "2%"; // Adjust size based on your image
+    div.style.height = "2%";
+    div.style.cursor = "pointer";
+    // For testing, make divs visible
+    div.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+    // For final version, uncomment the line below and comment out the one above
+    // div.style.backgroundColor = "transparent";
+
+    div.addEventListener("click", () => {
+        document.getElementById("element-name").textContent = `${el.name} (${el.symbol})`;
+        document.getElementById("element-desc").textContent = el.desc;
+        document.getElementById("description-box").classList.remove("hidden");
+    });
+
+    overlay.appendChild(div);
+});
+
+function hideDescription() {
+    document.getElementById("description-box").classList.add("hidden");
+}
