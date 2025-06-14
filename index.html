@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PFTG Spiral Periodic Table</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <h1 class="title">PFTG Hybrid Periodic Table</h1>
+
+  <div class="zone-buttons">
+    <button class="zone-toggle" data-zone="all">All</button>
+    <button class="zone-toggle" data-zone="noble">Noble Gases</button>
+    <button class="zone-toggle" data-zone="alkali">Alkali Metals</button>
+    <button class="zone-toggle" data-zone="alkaline">Alkaline Earth</button>
+    <button class="zone-toggle" data-zone="transition">Transition Metals</button>
+    <button class="zone-toggle" data-zone="metalloid">Metalloids</button>
+    <button class="zone-toggle" data-zone="nonmetal">Nonmetals</button>
+    <button class="zone-toggle" data-zone="halogen">Halogens</button>
+    <button class="zone-toggle" data-zone="lanthanide">Lanthanides</button>
+    <button class="zone-toggle" data-zone="actinide">Actinides</button>
+  </div>
+
+  <div id="table-container">
+    <svg id="spiral-table" viewBox="0 0 800 800">
+      <image href="pftg_spiral_background.png" x="0" y="0" width="800" height="800" />
+    </svg>
+  </div>
+
+  <div id="tooltip" class="hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
