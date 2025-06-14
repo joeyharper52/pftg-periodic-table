@@ -12,14 +12,16 @@ obody {
 
 .container {
   position: relative;
-  display: inline-block;
-  text-align: center;
+  display: block;
+  width: 1200px;         /* Match expected layout width */
+  max-width: 100%;
+  margin: 0 auto;         /* Center it */
 }
 
 .table-image {
-  width: 600px; 
-  max-width: auto;
+  width: 100%;
   height: auto;
+  display: block;
 }
 
 #element-overlay {
