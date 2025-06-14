@@ -1,21 +1,20 @@
-const elements = [ /* your element array, same as before */ ];
+const elements = [
+  { symbol: "H", number: 1, zone: "Core", color: "#00ffff", desc: "Core – Primordial scalar anchor" },
+  { symbol: "He", number: 2, zone: "Zone 1", color: "#00ffaa", desc: "Zone 1 – First pressure shell" },
+  { symbol: "Li", number: 3, zone: "Zone 1", color: "#00ffaa", desc: "Zone 1 – First pressure shell" },
+  // Add the rest of the elements...
+];
 
 const svg = document.getElementById("spiral-table");
 const tooltip = document.getElementById("tooltip");
 const zoneButtons = document.querySelectorAll(".zone-toggle");
 
-// Spiral constants
-const angleStep = 0.33;
-const radiusStep = 4;
-const centerX = 400;
-const centerY = 400;
-
-// Draw element buttons around a spiral
+// Draw buttons
 elements.forEach((el, i) => {
-  const angle = i * angleStep;
-  const radius = 30 + i * radiusStep;
-  const x = centerX + radius * Math.cos(angle);
-  const y = centerY + radius * Math.sin(angle);
+  const angle = i * 0.35;
+  const radius = 40 + i * 3.8;
+  const x = 400 + radius * Math.cos(angle);
+  const y = 400 + radius * Math.sin(angle);
 
   const btn = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
   btn.setAttribute("x", x - 20);
@@ -23,33 +22,28 @@ elements.forEach((el, i) => {
   btn.setAttribute("width", "40");
   btn.setAttribute("height", "40");
 
-  btn.innerHTML = `
+  // XHTML required inside foreignObject!
+  const divHTML = `
     <div xmlns="http://www.w3.org/1999/xhtml" 
-         class="element" 
-         data-zone="${el.zone}" 
-         style="
-           width: 40px; height: 40px; 
-           border-radius: 8px; 
-           background: ${el.color}; 
-           display: flex; align-items: center; justify-content: center;
-           font-weight: bold;
-           color: black;
-           font-size: 1rem;
-           cursor: pointer;
-         ">
+         style="display:flex;align-items:center;justify-content:center;
+                width:40px;height:40px;border-radius:8px;font-weight:bold;
+                background:${el.color};color:#000;box-shadow:0 0 10px ${el.color};
+                font-size:0.8rem;cursor:pointer;"
+         class="element" data-zone="${el.zone}">
       ${el.symbol}
     </div>
   `;
 
-  // Tooltip behavior
+  btn.innerHTML = divHTML;
+
   btn.addEventListener("mouseenter", () => {
     tooltip.innerHTML = `<strong>${el.symbol} (#${el.number})</strong><br>${el.desc}`;
     tooltip.classList.remove("hidden");
   });
 
   btn.addEventListener("mousemove", (e) => {
-    tooltip.style.left = e.pageX + 15 + "px";
-    tooltip.style.top = e.pageY + 15 + "px";
+    tooltip.style.left = e.pageX + 10 + "px";
+    tooltip.style.top = e.pageY + 10 + "px";
   });
 
   btn.addEventListener("mouseleave", () => {
@@ -59,13 +53,12 @@ elements.forEach((el, i) => {
   svg.appendChild(btn);
 });
 
-// Zone filtering logic
+// Filtering
 zoneButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     const zone = btn.getAttribute("data-zone");
     document.querySelectorAll(".element").forEach(el => {
-      const show = zone === "all" || el.getAttribute("data-zone") === zone;
-      el.style.display = show ? "flex" : "none";
+      el.style.display = (zone === "all" || el.dataset.zone === zone) ? "flex" : "none";
     });
 
     zoneButtons.forEach(b => b.classList.remove("active"));
