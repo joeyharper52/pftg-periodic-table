@@ -122,19 +122,22 @@ const elements = [
 // Container for the table
 const container = document.getElementById("table-container");
 
-// Define zones
+// Define layers based on zones
 const zones = ["Core", "Zone 1", "Zone 2", "Zone 3", "Zone 4", "Zone 5", "Zone 6"];
+const baseRadius = 50; // Base radius for the innermost spiral
+const spacing = 80;   // Space between layers
+const elementsPerLayer = 18; // Approximate number of elements per layer for even distribution
 
-// Create separate spirals for each zone
-zones.forEach((zone, index) => {
-  const zoneElements = elements.filter(el => el.zone === zone);
-  const baseRadius = 150; // Base radius for each spiral
-  const angleStep = (2 * Math.PI) / zoneElements.length; // Adjust based on number of elements
+// Create layered spirals
+zones.forEach((zone, layerIndex) => {
+  const layerElements = elements.filter(el => el.zone === zone);
+  const layerRadius = baseRadius + (layerIndex * spacing);
+  const angleStep = (2 * Math.PI) / elementsPerLayer;
 
-  zoneElements.forEach((el, idx) => {
-    const angle = idx * angleStep;
-    const x = 400 + baseRadius * Math.cos(angle); // Center at 400 (half of 800 viewBox)
-    const y = 400 + baseRadius * Math.sin(angle); // Center at 400 (half of 800 viewBox)
+  layerElements.forEach((el, index) => {
+    const angle = index * angleStep;
+    const x = 400 + layerRadius * Math.cos(angle); // Center at 400 (half of 800 viewBox)
+    const y = 400 + layerRadius * Math.sin(angle); // Center at 400 (half of 800 viewBox)
 
     const div = document.createElement("div");
     div.className = `element ${zone.replace(" ", "")}`;
@@ -150,27 +153,31 @@ zones.forEach((zone, index) => {
     div.style.cursor = "pointer";
     div.textContent = el.symbol;
     div.dataset.description = el.desc; // Store description in data attribute
-    div.style.display = index === 0 ? "block" : "none"; // Show only Core by default
 
     container.appendChild(div);
   });
 });
 
-// Toggle zone visibility (exclusive selection)
+// Toggle zone visibility
 document.querySelectorAll(".zone-toggle").forEach(button => {
   button.addEventListener("click", () => {
     const zone = button.getAttribute("data-zone").replace(" ", "");
-    const isActive = button.classList.contains("active");
+    const isVisible = button.classList.toggle("active");
 
-    // Deactivate all buttons and hide all elements
-    document.querySelectorAll(".zone-toggle").forEach(btn => btn.classList.remove("active"));
-    document.querySelectorAll(".element").forEach(el => el.style.display = "none");
-
-    // Activate the clicked button and show its elements
-    if (!isActive) {
-      button.classList.add("active");
+    if (zone === "all") {
+      document.querySelectorAll(".element").forEach(el => {
+        el.style.display = isVisible ? "block" : "none";
+      });
+    } else {
       document.querySelectorAll(`.element.${zone}`).forEach(el => {
-        el.style.display = "block";
+        el.style.display = isVisible ? "block" : "none";
+      });
+    }
+
+    // Deactivate other buttons when "All" is toggled
+    if (zone === "all" && isVisible) {
+      document.querySelectorAll(".zone-toggle").forEach(btn => {
+        if (btn.getAttribute("data-zone") !== "all") btn.classList.remove("active");
       });
     }
   });
