@@ -17,7 +17,7 @@ body {
 }
 
 .table-image {
-  width: 1200px; /* force large rendering */
+  width: 600px; /* force large rendering */
   max-width: none;
   height: auto;
 }
