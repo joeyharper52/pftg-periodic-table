@@ -119,27 +119,46 @@ const elements = [
   { symbol: "Og", number: 118, zone: "Zone 6", color: "#ff00ff", desc: "Zone 6 – Outer instability fringe" }
 ];
 
-// Create spiral element buttons
+// Container for the table
 const container = document.getElementById("table-container");
-elements.forEach(el => {
-  const angle = (el.number - 1) * 0.3;
-  const radius = 70 + el.number * 2;
-  const x = 400 + radius * Math.cos(angle); // Centered at 400 (half of 800 viewBox)
-  const y = 400 + radius * Math.sin(angle); // Centered at 400 (half of 800 viewBox)
 
-  const div = document.createElement("div");
-  div.className = `element ${el.zone.replace(" ", "")}`;
-  div.style.left = `${x - 30}px`; // Adjust for element width (60px)
-  div.style.top = `${y - 30}px`;  // Adjust for element height (60px)
-  div.style.backgroundColor = el.color;
-  div.style.position = "absolute";
-  div.textContent = el.symbol;
-  div.setAttribute("title", `${el.symbol} (${el.number}): ${el.desc}`);
+// Define layers based on zones
+const zones = ["Core", "Zone 1", "Zone 2", "Zone 3", "Zone 4", "Zone 5", "Zone 6"];
+const baseRadius = 50; // Base radius for the innermost spiral
+const spacing = 80;   // Space between layers
+const elementsPerLayer = 18; // Approximate number of elements per layer for even distribution
 
-  container.appendChild(div);
+// Create layered spirals
+zones.forEach((zone, layerIndex) => {
+  const layerElements = elements.filter(el => el.zone === zone);
+  const layerRadius = baseRadius + (layerIndex * spacing);
+  const angleStep = (2 * Math.PI) / elementsPerLayer;
+
+  layerElements.forEach((el, index) => {
+    const angle = index * angleStep;
+    const x = 400 + layerRadius * Math.cos(angle); // Center at 400 (half of 800 viewBox)
+    const y = 400 + layerRadius * Math.sin(angle); // Center at 400 (half of 800 viewBox)
+
+    const div = document.createElement("div");
+    div.className = `element ${zone.replace(" ", "")}`;
+    div.style.left = `${x - 20}px`; // Adjust for element width (40px)
+    div.style.top = `${y - 20}px`;  // Adjust for element height (40px)
+    div.style.backgroundColor = el.color;
+    div.style.position = "absolute";
+    div.style.width = "40px";
+    div.style.height = "40px";
+    div.style.lineHeight = "40px";
+    div.style.textAlign = "center";
+    div.style.borderRadius = "5px";
+    div.style.cursor = "pointer";
+    div.textContent = el.symbol;
+    div.dataset.description = el.desc; // Store description in data attribute
+
+    container.appendChild(div);
+  });
 });
 
-// Toggle zones by buttons
+// Toggle zone visibility
 document.querySelectorAll(".zone-toggle").forEach(button => {
   button.addEventListener("click", () => {
     const zone = button.getAttribute("data-zone").replace(" ", "");
@@ -164,12 +183,12 @@ document.querySelectorAll(".zone-toggle").forEach(button => {
   });
 });
 
-// Tooltip functionality
+// Click to show description
 const tooltip = document.getElementById("tooltip");
 document.querySelectorAll(".element").forEach(element => {
-  element.addEventListener("mousemove", (e) => {
-    const title = element.getAttribute("title");
-    tooltip.textContent = title;
+  element.addEventListener("click", (e) => {
+    const desc = element.dataset.description;
+    tooltip.textContent = desc;
     tooltip.classList.remove("hidden");
     tooltip.style.left = `${e.pageX + 10}px`;
     tooltip.style.top = `${e.pageY + 10}px`;
@@ -178,4 +197,18 @@ document.querySelectorAll(".element").forEach(element => {
   element.addEventListener("mouseleave", () => {
     tooltip.classList.add("hidden");
   });
+});
+
+// Ensure tooltip stays within viewport
+window.addEventListener("resize", () => {
+  const tooltipRect = tooltip.getBoundingClientRect();
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
+  if (tooltipRect.right > windowWidth) {
+    tooltip.style.left = `${windowWidth - tooltipRect.width - 10}px`;
+  }
+  if (tooltipRect.bottom > windowHeight) {
+    tooltip.style.top = `${windowHeight - tooltipRect.height - 10}px`;
+  }
 });
