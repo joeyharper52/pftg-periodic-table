@@ -14,7 +14,7 @@ const elements = [
     { symbol: "Mg", name: "Magnesium", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 450.0, radius: 24.24 },
     { symbol: "Al", name: "Aluminum", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 495.0, radius: 24.24 },
     { symbol: "Si", name: "Silicon", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 540.0, radius: 24.24 },
-    { symbol: "P", name: "Phosphorus", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 585.0, radius: 24.24 },
+    { symbol: "P", name: "Phosphorus", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 23.0, radius: 24.24 },
     { symbol: "S", name: "Sulfur", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 630.0, radius: 24.24 },
     { symbol: "Cl", name: "Chlorine", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 675.0, radius: 24.24 },
     { symbol: "Ar", name: "Argon", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 720.0, radius: 24.24 },
