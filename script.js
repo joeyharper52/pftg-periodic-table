@@ -10,7 +10,7 @@ const elements = [
     { symbol: "O", name: "Oxygen", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 270.0, radius: 24.24 },
     { symbol: "F", name: "Fluorine", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 0.90, radius: 0.5 },
     { symbol: "Ne", name: "Neon", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 360.0, radius: 24.24 },
-    { symbol: "Na", name: "Sodium", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 405.0, radius: 24.24 },
+    { symbol: "Na", name: "Sodium", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 585.0, radius: 24.24 },
     { symbol: "Mg", name: "Magnesium", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 450.0, radius: 24.24 },
     { symbol: "Al", name: "Aluminum", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 495.0, radius: 24.24 },
     { symbol: "Si", name: "Silicon", desc: "Zone 1 – First pressure shell", zone: "Zone 1", angle: 540.0, radius: 24.24 },
