@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Spiral Periodic Table</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PFTG Spiral Periodic Table</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <img src="pftg_periodic_table.jpg" alt="Spiral Periodic Table" class="table-image">
-        <div id="element-overlay"></div>
-    </div>
-    <div id="description-box" class="description-box hidden">
-        <h2 id="element-name"></h2>
-        <p id="element-desc"></p>
-        <button onclick="hideDescription()">Close</button>
-    </div>
-    <script src="script.js"></script>
+
+  <div class="zone-filter">
+    <button onclick="filterZone('All')">All</button>
+    <button onclick="filterZone('Core')">Core</button>
+    <button onclick="filterZone('Zone 1')">Zone 1</button>
+    <button onclick="filterZone('Zone 2')">Zone 2</button>
+    <button onclick="filterZone('Zone 3')">Zone 3</button>
+    <button onclick="filterZone('Zone 4')">Zone 4</button>
+    <button onclick="filterZone('Zone 5')">Zone 5</button>
+    <button onclick="filterZone('Zone 6')">Zone 6</button>
+  </div>
+
+  <div class="container">
+    <img src="pftg_periodic_table.jpg" alt="Spiral Periodic Table" class="table-image" />
+    <div id="element-overlay"></div>
+  </div>
+
+  <div id="description-box" class="description-box hidden">
+    <h2 id="element-name"></h2>
+    <p id="element-desc"></p>
+    <button onclick="hideDescription()">Close</button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
