@@ -1,4 +1,4 @@
-body {
+obody {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #1a1a1a;
@@ -17,7 +17,7 @@ body {
 }
 
 .table-image {
-  width: 600px; /* force large rendering */
+  width: 600px; 
   max-width: auto;
   height: auto;
 }
