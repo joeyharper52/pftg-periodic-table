@@ -120,45 +120,62 @@ const elements = [
 ];
 
 // Create spiral element buttons
-const svg = document.getElementById("spiral");
+const container = document.getElementById("table-container");
 elements.forEach(el => {
   const angle = (el.number - 1) * 0.3;
   const radius = 70 + el.number * 2;
-  const x = 300 + radius * Math.cos(angle);
-  const y = 300 + radius * Math.sin(angle);
+  const x = 400 + radius * Math.cos(angle); // Centered at 400 (half of 800 viewBox)
+  const y = 400 + radius * Math.sin(angle); // Centered at 400 (half of 800 viewBox)
 
-  const foreignObject = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
-  foreignObject.setAttribute("x", x - 15);
-  foreignObject.setAttribute("y", y - 15);
-  foreignObject.setAttribute("width", 30);
-  foreignObject.setAttribute("height", 30);
-  foreignObject.setAttribute("class", `element ${el.zone.replace(" ", "")}`);
-
-  const div = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
+  const div = document.createElement("div");
+  div.className = `element ${el.zone.replace(" ", "")}`;
+  div.style.left = `${x - 30}px`; // Adjust for element width (60px)
+  div.style.top = `${y - 30}px`;  // Adjust for element height (60px)
   div.style.backgroundColor = el.color;
-  div.style.borderRadius = "50%";
-  div.style.width = "30px";
-  div.style.height = "30px";
-  div.style.display = "flex";
-  div.style.alignItems = "center";
-  div.style.justifyContent = "center";
-  div.style.fontSize = "0.75rem";
-  div.style.color = "#000";
-  div.setAttribute("title", `${el.symbol} (${el.number}): ${el.desc}`);
+  div.style.position = "absolute";
   div.textContent = el.symbol;
+  div.setAttribute("title", `${el.symbol} (${el.number}): ${el.desc}`);
 
-  foreignObject.appendChild(div);
-  svg.appendChild(foreignObject);
+  container.appendChild(div);
 });
 
 // Toggle zones by buttons
-document.querySelectorAll(".zone-button").forEach(button => {
+document.querySelectorAll(".zone-toggle").forEach(button => {
   button.addEventListener("click", () => {
     const zone = button.getAttribute("data-zone").replace(" ", "");
     const isVisible = button.classList.toggle("active");
 
-    document.querySelectorAll(`.element.${zone}`).forEach(el => {
-      el.style.display = isVisible ? "inline" : "none";
-    });
+    if (zone === "all") {
+      document.querySelectorAll(".element").forEach(el => {
+        el.style.display = isVisible ? "block" : "none";
+      });
+    } else {
+      document.querySelectorAll(`.element.${zone}`).forEach(el => {
+        el.style.display = isVisible ? "block" : "none";
+      });
+    }
+
+    // Deactivate other buttons when "All" is toggled
+    if (zone === "all" && isVisible) {
+      document.querySelectorAll(".zone-toggle").forEach(btn => {
+        if (btn.getAttribute("data-zone") !== "all") btn.classList.remove("active");
+      });
+    }
+  });
+});
+
+// Tooltip functionality
+const tooltip = document.getElementById("tooltip");
+document.querySelectorAll(".element").forEach(element => {
+  element.addEventListener("mousemove", (e) => {
+    const title = element.getAttribute("title");
+    tooltip.textContent = title;
+    tooltip.classList.remove("hidden");
+    tooltip.style.left = `${e.pageX + 10}px`;
+    tooltip.style.top = `${e.pageY + 10}px`;
+  });
+
+  element.addEventListener("mouseleave", () => {
+    tooltip.classList.add("hidden");
   });
 });
